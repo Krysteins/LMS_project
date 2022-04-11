@@ -1,10 +1,15 @@
-{% extends "__base__.html"%}
+{% extends "__base__.html" %}
 {% block title %}
-Dashboard
+    Dashboard
 {% endblock %}
 {% block container %}
-<h1>TO JEST GŁÓWNA STRONA</h1>
-<h1>TO JEST GŁÓWNA STRONA</h1>
-<h1>TO JEST GŁÓWNA STRONA</h1>
-<h1>TO JEST GŁÓWNA STRONA</h1>
+    <h1>TO JEST GŁÓWNA STRONA</h1>
+    <h1>TO JEST GŁÓWNA STRONA</h1>
+    <h1>TO JEST GŁÓWNA STRONA</h1>
+    <h1>TO JEST GŁÓWNA STRONA</h1>
+    {% for message in messages %}
+        <div class="alert alert-info " role="alert">
+            <strong>Message:</strong> {{ message }}
+        </div>
+    {% endfor %}
 {% endblock %}

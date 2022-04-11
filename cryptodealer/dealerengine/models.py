@@ -13,5 +13,12 @@ class Membership(models.Model):
 
 
 class Users(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    usd = models.DecimalField(max_digits=12, decimal_places=2)
+    account = models.OneToOneField(User, on_delete=models.CASCADE)
+    usd = models.DecimalField(max_digits=22, decimal_places=2, default=10.00)
+    member = models.ForeignKey(Membership, on_delete=models.PROTECT)
+
+
+class Value(models.Model):
+    account = models.OneToOneField(User, on_delete=models.CASCADE)
+    crypto = models.ManyToManyField(Crypto)
+    value = models.DecimalField(max_digits=100, decimal_places=8, default=0)

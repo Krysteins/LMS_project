@@ -1,15 +1,10 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-<h3>SignUp</h3>
-<form action="/signup" method="post">
+{% extends "__base__.html" %}
+{% block title %}
+register
+{% endblock %}
+{% block container %}
+<h3>Register</h3>
+<form action="/register" method="post">
     {% csrf_token %}
     <label for="">Login</label>
     <input type="text" id="login" name="login" placeholder="login" Required>
@@ -24,7 +19,6 @@
     <input type="password" id="password2" name="password2" placeholder="repeat password" Required>
     <br>
 
-    <button tpye="submit">Sign Up</button>
+    <button tpye="submit">Submit</button>
 </form>
-</body>
-</html>
+{% endblock %}

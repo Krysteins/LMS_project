@@ -9,7 +9,7 @@ def home(request):
     return render(request, "main_site.html")
 
 
-def signup(request):
+def register(request):
     if request.method == "POST":
         username = request.POST.get('login')
         email = request.POST.get('email')
@@ -29,11 +29,12 @@ def signup(request):
         myuser = User.objects.create_user(login, email, password)
         myuser.save()
 
-        messages.success(request, "Your account gas been created")
+        messages.success(request, "Your account has been created")
+        messages.success(request, "Now you can login")
 
-        return redirect("signin")
+        return redirect("login_view")
 
-    return render(request, "authentication/signup.html")
+    return render(request, "authentication/register.html")
 
 
 def loginin(request):
@@ -46,12 +47,12 @@ def loginin(request):
         if user is not None:
             login(request, user)
             login_name = user.username
-            return render(request, "authentication/index.html", {'login_name': login_name})
+            return render(request, "profile.html", {'login_name': login_name})
         else:
             messages.error(request, "Wrong login or password")
             return redirect('home')
 
-    return render(request, 'login.html')
+    return render(request, 'authentication/login.html')
 
 
 def signout(request):
