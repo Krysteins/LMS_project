@@ -2,3 +2,4 @@ Django
 psycopg2-binary
 pytest
 pytest-django
+crispy-bootstrap5
