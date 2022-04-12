@@ -67,33 +67,63 @@ class ProfileWeb(View):
         }
         return render(request, "profile.html", context=context)
 
-# class(View):
-#     def get(self, request):
-#         context = {
-#
-#         }
-#         return render(request, "crypto.html", context=context)
-#
-#
-# class(View):
-#     def get(self, request):
-#         context = {
-#
-#         }
-#         return render(request, "crypto.html", context=context)
-#
-#
-# class(View):
-#     def get(self, request):
-#         context = {
-#
-#         }
-#         return render(request, "crypto.html", context=context)
 
-#
-# class(View):
-#     def get(self, request):
-#         context = {
-#
-#         }
-#         return render(request, "crypto.html", context=context)
+###################################################################################################################
+class Bitcoin(View):
+    def get(self, request):
+        current_user = request.user
+        user_id = current_user.id
+        users = Users.objects.filter(account=user_id)
+        #######
+        context = {
+            'users': users
+        }
+        return render(request, "list_crypto/1.html", context=context)
+
+
+class Litecoin(View):
+    def get(self, request):
+        current_user = request.user
+        user_id = current_user.id
+        users = Users.objects.filter(account=user_id)
+        #######
+        context = {
+            'users': users
+        }
+        return render(request, "list_crypto/2.html", context=context)
+
+
+class Dogecoin(View):
+    def get(self, request):
+        current_user = request.user
+        user_id = current_user.id
+        users = Users.objects.filter(account=user_id)
+        #######
+        context = {
+            'users': users
+        }
+        return render(request, "list_crypto/3.html", context=context)
+
+
+class Tether(View):
+    def get(self, request):
+        current_user = request.user
+        user_id = current_user.id
+        users = Users.objects.filter(account=user_id)
+        #######
+        context = {
+            'users': users
+        }
+        return render(request, "list_crypto/4.html", context=context)
+
+
+class Ethereum(View):
+    def get(self, request):
+        current_user = request.user
+        user_id = current_user.id
+        users = Users.objects.filter(account=user_id)
+        #######
+        context = {
+            'users': users
+        }
+        return render(request, "list_crypto/5.html", context=context)

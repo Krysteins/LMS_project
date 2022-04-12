@@ -13,22 +13,17 @@
         </tr>
         </thead>
         <tbody>
-        {% regroup values by value as new_list %}
-        {% for liczba in new_list %}
         {% for names in name %}
             <tr>
-                <td>{{ names.id }}</td>
+            <td><strong>#{{ names.id }}</strong></td>
                 <td>{{ names.name }}</td>
                 <td>{{ names.price }}$</td>
-            {% endfor %}
-                    {% for value in values %}
-                    <td>{{ value }}</td>
-                            {% endfor %}
-                <td>Buy/Sell</td>
+                <td><a href="{{ names.id }}"><button type="button" class="btn btn-secondary">Buy or Sell</button></a></td>
             </tr>
+         {% endfor %}
 
 
-        {% endfor %}
+{#        {% endfor %}#}
         </tbody>
     </table>
 {% endblock %}
