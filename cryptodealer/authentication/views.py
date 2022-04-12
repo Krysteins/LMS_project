@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from dealerengine.models import Users, Value, Crypto
 
 
 def home(request):
@@ -17,7 +18,7 @@ def register(request):
         password2 = request.POST.get('password2')
 
         if User.objects.filter(username=username):
-            messages.error(request,"Login already exist!")
+            messages.error(request, "Login already exist!")
             return redirect('home')
 
         if User.objects.filter(email=email):
@@ -28,6 +29,19 @@ def register(request):
 
         myuser = User.objects.create_user(login, email, password)
         myuser.save()
+        adduser = Users.objects.create(account=myuser, usd=10)
+        adduser.save()
+        coins = Crypto.objects.all()
+        addcrypto1 = Value.objects.create(value=0, account=myuser, crypto=coins[0])
+        addcrypto1.save()
+        addcrypto2 = Value.objects.create(value=0, account=myuser, crypto=coins[1])
+        addcrypto2.save()
+        addcrypto3 = Value.objects.create(value=0, account=myuser, crypto=coins[2])
+        addcrypto3.save()
+        addcrypto4 = Value.objects.create(value=0, account=myuser, crypto=coins[3])
+        addcrypto4.save()
+        addcrypto5 = Value.objects.create(value=0, account=myuser, crypto=coins[4])
+        addcrypto5.save()
 
         messages.success(request, "Your account has been created")
         messages.success(request, "Now you can login")

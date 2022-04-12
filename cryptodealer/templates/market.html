@@ -3,5 +3,30 @@
 market
 {% endblock %}
 {% block container %}
-
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Membership</th>
+      <th scope="col">Price for month</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for member in members %}
+    <tr>
+      <th scope="row">{{ member.name }}</th>
+      <td>{{ member.price }} $</td>
+        <form action="" method="POST">
+            {% csrf_token %}
+      <td>
+      <input type="submit" class="btn btn-color rounded-0 pt-0 pb-0 pr-4 pl-4" style="background-color:green;"
+                 value="Buy" name="buying{{ member.id }}">
+        {{ deal }}
+      </td>
+        </form>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
 {% endblock %}

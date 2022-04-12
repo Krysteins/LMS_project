@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.urls import path, include
-from dealerengine import views
+from dealerengine.views import CryptoWeb, MarketWeb, ProfileWeb
 
 urlpatterns = [
-    path('', views.main, name='main'),
-    path('1/', views.one, name='one'),
-    path('2/', views.two, name='two'),
-    path('3/', views.three, name='three'),
+    path('', ProfileWeb.as_view(), name='profile_view'),
+    path('crypto/', CryptoWeb.as_view(), name='crypto_view'),
+    path('market/', MarketWeb.as_view(), name='market_view'),
+    # path('3/', views.three, name='three'),
 
 ]

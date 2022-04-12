@@ -1,7 +1,34 @@
-{% extends "__base__.html"%}
+{% extends "__base__.html" %}
 {% block title %}
-cryptocurrency
+    cryptocurrency
 {% endblock %}
 {% block container %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Crypto</th>
+            <th scope="col">Price</th>
+            <th scope="col">Your value</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% regroup values by value as new_list %}
+        {% for liczba in new_list %}
+        {% for names in name %}
+            <tr>
+                <td>{{ names.id }}</td>
+                <td>{{ names.name }}</td>
+                <td>{{ names.price }}$</td>
+            {% endfor %}
+                    {% for value in values %}
+                    <td>{{ value }}</td>
+                            {% endfor %}
+                <td>Buy/Sell</td>
+            </tr>
 
+
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
