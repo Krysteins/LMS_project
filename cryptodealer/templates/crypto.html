@@ -1,0 +1,29 @@
+{% extends "__base__.html" %}
+{% block title %}
+    cryptocurrency
+{% endblock %}
+{% block container %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Crypto</th>
+            <th scope="col">Price</th>
+            <th scope="col">Your value</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for names in name %}
+            <tr>
+            <td><strong>#{{ names.id }}</strong></td>
+                <td>{{ names.name }}</td>
+                <td>{{ names.price }}$</td>
+                <td><a href="{{ names.id }}"><button type="button" class="btn btn-secondary">Buy or Sell</button></a></td>
+            </tr>
+         {% endfor %}
+
+
+{#        {% endfor %}#}
+        </tbody>
+    </table>
+{% endblock %}

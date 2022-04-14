@@ -1,0 +1,30 @@
+{% extends "__base__.html"%}
+{% block title %}
+market
+{% endblock %}
+{% block container %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Membership</th>
+      <th scope="col">Price for month</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for member in members %}
+    <tr>
+      <th scope="row">{{ member.name }}</th>
+      <td>{{ member.price }} $</td>
+        <form action="" method="POST">
+            {% csrf_token %}
+      <td>
+      <button type="submit" name="buy{{ member.id }}" class="btn btn-success">Buy</button>
+      </td>
+        </form>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
