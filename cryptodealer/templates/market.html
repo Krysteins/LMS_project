@@ -20,9 +20,7 @@ market
         <form action="" method="POST">
             {% csrf_token %}
       <td>
-      <input type="submit" class="btn btn-color rounded-0 pt-0 pb-0 pr-4 pl-4" style="background-color:green;"
-                 value="Buy" name="buying{{ member.id }}">
-        {{ deal }}
+      <button type="submit" name="buy{{ member.id }}" class="btn btn-success">Buy</button>
       </td>
         </form>
     </tr>

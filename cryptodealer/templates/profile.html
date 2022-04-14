@@ -1,7 +1,28 @@
 {% extends "__base__.html"%}
+{% load static %}
 {% block title %}
 profile
 {% endblock %}
 {% block container %}
+    <div class="center">
+ <img src="{% static "images/profile.svg" %}" class="rounded mx-auto d-block" alt="bitcoin" width="300"
+             height="300">
+    <h1 class="rounded mx-auto d-block">{{ user }}</h1>
+        </div>
+    <table class="table">
 
+  <tbody>
+    <tr>
+      <th>1</th>
+
+    </tr>
+    <tr>
+      <th>2</th>
+
+    </tr>
+    <tr>
+      <th></th>
+    </tr>
+  </tbody>
+</table>
 {% endblock %}
