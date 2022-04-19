@@ -26,40 +26,51 @@
                 {% if user.is_authenticated %}
 
 
-                    <a class="nav-link" href="{% url 'profile_view' %}"><button type="button" class="btn btn-primary btn-lg">Profile</button></a>
-                    <a class="nav-link" href="{% url 'market_view' %}"><button type="button" class="btn btn-primary btn-lg">Market</button></a>
-                    <a class="nav-link" href="{% url 'crypto_view' %}"><button type="button" class="btn btn-primary btn-lg">Cryptocurrency</button></a>
-                    <a class="nav-link" href="{% url 'history_view' %}"><button type="button" class="btn btn-primary btn-lg">History</button></a>
+                    <a class="nav-link" href="{% url 'profile_view' %}">
+                        <button type="button" class="btn btn-primary btn-lg">Profile</button>
+                    </a>
+                    <a class="nav-link" href="{% url 'market_view' %}">
+                        <button type="button" class="btn btn-primary btn-lg">Market</button>
+                    </a>
+                    <a class="nav-link" href="{% url 'crypto_view' %}">
+                        <button type="button" class="btn btn-primary btn-lg">Cryptocurrency</button>
+                    </a>
+                    <a class="nav-link" href="{% url 'history_view' %}">
+                        <button type="button" class="btn btn-primary btn-lg">History</button>
+                    </a>
 
 
                     {% for a in users %}
                         <li class="nav-item">
-                    <a class="nav-link">Balance: {{ a.usd }} $</a>
+                            <a class="nav-link">Balance: {{ a.usd }} $</a>
                         </li>
                     {% endfor %}
                     <li class="nav-item">
-                    <a class="nav-link" href="{% url 'profile_view'%}">Profile: {{ user }}</a>
+                        <a class="nav-link" href="{% url 'profile_view' %}">Profile: {{ user }}</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="{% url 'signout' %}">
-                        <button type="button" class="btn btn-danger">
-                            Logout
-                        </button></a>
+                        <a class="nav-link" href="{% url 'signout' %}">
+                            <button type="button" class="btn btn-danger">
+                                Logout
+                            </button>
+                        </a>
                     </li>
 
                 {% else %}
-                <li class="nav-item">
-                <a href="{% url 'login_view' %}">
-                    <button type="button" class="btn btn-primary">
-                            Login
-                       </button> </a>
-                </li>
-                <li class="nav-item">
-                <a href="{% url 'register_view' %}">
-                    <button type="button" class="btn btn-dark">
-                            Register
-                        </button></a>
-                </li>
+                    <li class="nav-item">
+                        <a href="{% url 'login_view' %}">
+                            <button type="button" class="btn btn-primary">
+                                Login
+                            </button>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'register_view' %}">
+                            <button type="button" class="btn btn-dark">
+                                Register
+                            </button>
+                        </a>
+                    </li>
                 {% endif %}
             </ul>
         </div>

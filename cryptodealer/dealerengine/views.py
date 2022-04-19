@@ -7,7 +7,7 @@ from dealerengine.models import Crypto, Membership, Users, Value, History
 from django.contrib import messages
 
 
-# odnośnik do strony
+# odnośnik do strony z listą kryptowalut
 class CryptoWeb(View):
     def get(self, request):
         current_user = request.user
@@ -23,6 +23,7 @@ class CryptoWeb(View):
         return render(request, "crypto.html", context=context)
 
 
+# odnośnik do strony z listą pakietów, które zmniejszają prowizję zakupu
 class MarketWeb(View):
     def get(self, request):
         current_user = request.user
@@ -96,7 +97,9 @@ class HistoryWeb(View):
 
 
 ###################################################################################################################
+# klasa poświęcona Bitcoin'em
 class Bitcoin(View):
+    # wyświetlanie informacji do strony z bitcoin'em
     def get(self, request):
         current_user = request.user
         user_id = current_user.id
@@ -111,7 +114,7 @@ class Bitcoin(View):
             'my_value': my_value,
         }
         return render(request, "list_crypto/1.html", context=context)
-
+    # pobieranie informacji zakupu lub sprzedaży kryptowaluty oraz wprowadzanie ich do bazy danych
     def post(self, request):
         current_user = request.user
         user_id = current_user.id
