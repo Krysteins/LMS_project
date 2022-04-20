@@ -25,3 +25,12 @@ class Value(models.Model):
     account = models.ForeignKey(User, on_delete=models.CASCADE)
     crypto = models.ForeignKey(Crypto, on_delete=models.CASCADE, default=None)
     value = models.DecimalField(max_digits=100, decimal_places=8, default=0)
+
+
+class History(models.Model):
+    date_exchange = models.DateTimeField(auto_now_add=True)
+    transaction = models.CharField(max_length=32)
+    account = models.ManyToManyField(User)
+    name_crypto = models.CharField(max_length=32, default="")
+    value_crypto = models.DecimalField(max_digits=100, decimal_places=8, default=0)
+    value_usd = models.DecimalField(max_digits=100, decimal_places=2, default=0)

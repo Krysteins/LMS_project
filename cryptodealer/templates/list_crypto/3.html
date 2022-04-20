@@ -5,22 +5,29 @@
 {% endblock %}
 {% block container %}
     <div class="text-center">
-         <a class="nav-link" href="{% url 'crypto_view' %}"><button type="button" class="btn btn-primary btn-lg">Back</button></a>
+        <a class="nav-link" href="{% url 'crypto_view' %}">
+            <button type="button" class="btn btn-primary btn-lg">Back</button>
+        </a>
         <img src="{% static "images/dogecoin.svg" %}" class="rounded mx-auto d-block" alt="bitcoin" width="300"
              height="300">
         {% for money in dogecoin %}
-        <h2>{{ money.price }} $</h2>
-    {% endfor %}
-    {% for amount in my_value %}
-    <h3>Your amount: {{ amount.value }}</h3>
-    {% endfor %}
+            <h2>{{ money.price }} $</h2>
+        {% endfor %}
+        {% for amount in my_value %}
+            <h3>Your amount: {{ amount.value }}</h3>
+        {% endfor %}
+        {% for message in messages %}
+            <div class="alert alert-info " role="alert">
+                <strong>Message:</strong> {{ message }}
+            </div>
+        {% endfor %}
         <form action="" method="post">
-{% csrf_token %}
+            {% csrf_token %}
             <label>
                 <input name="take_price" class="p-1" type="number" value="0.000001" step="0.000001" min="0.000001">
             </label>
             <button type="submit" name="buy" class="btn btn-success">Buy</button>
-        <button type="submit" name="sell" class="btn btn-danger">Sell</button>
+            <button type="submit" name="sell" class="btn btn-danger">Sell</button>
     </div>
 
 {% endblock %}

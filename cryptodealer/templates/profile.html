@@ -1,28 +1,42 @@
-{% extends "__base__.html"%}
+{% extends "__base__.html" %}
 {% load static %}
 {% block title %}
-profile
+    profile
 {% endblock %}
 {% block container %}
     <div class="center">
- <img src="{% static "images/profile.svg" %}" class="rounded mx-auto d-block" alt="bitcoin" width="300"
+        <img src="{% static "images/profile.svg" %}" class="rounded mx-auto d-block" alt="bitcoin" width="300"
              height="300">
-    <h1 class="rounded mx-auto d-block">{{ user }}</h1>
-        </div>
+        <h1 class="rounded mx-auto d-block">{{ user }}</h1>
+    </div>
     <table class="table">
 
-  <tbody>
-    <tr>
-      <th>1</th>
+        <tbody>
+        {% for useres in users %}
+            <tr>
+                <th>Balance: {{ useres.usd }} $</th>
+            </tr>
+            <tr>
+            <th>Membership plan: {{ useres.member.name }}</th>
+            </tr>
 
-    </tr>
-    <tr>
-      <th>2</th>
+        {% endfor %}
 
-    </tr>
-    <tr>
-      <th></th>
-    </tr>
-  </tbody>
-</table>
+
+        {% for cryptos in crypto %}
+            <tr>
+                {% for names in crypto_name %}
+                    {% if names.id == cryptos.crypto.id %}
+                    <th>{{ names.name }} :
+                    {% endif %}
+                {% endfor %}
+                {{ cryptos.value }}</th>
+
+
+            </tr>
+        {% endfor %}
+
+
+        </tbody>
+    </table>
 {% endblock %}
