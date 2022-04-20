@@ -1,14 +1,17 @@
 from decimal import Decimal
+from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.contrib.auth.models import User
-from authentication import views
+from authentication import views, urls
 from dealerengine.models import Crypto, Membership, Users, Value, History
 from django.contrib import messages
 
 
-# odnośnik do strony z listą kryptowalut
-class CryptoWeb(View):
+# link to the page with the list of cryptocurrencies
+class CryptoWeb(LoginRequiredMixin, View):
+    # displaying all cryptocurrencies
     def get(self, request):
         current_user = request.user
         user_id = current_user.id
@@ -23,13 +26,13 @@ class CryptoWeb(View):
         return render(request, "crypto.html", context=context)
 
 
-# odnośnik do strony z listą pakietów, które zmniejszają prowizję zakupu
-class MarketWeb(View):
+# page for the list of packages that can be purchased and reduce the purchase commission
+class MarketWeb(LoginRequiredMixin, View):
+    # displaying all packages
     def get(self, request):
         current_user = request.user
         user_id = current_user.id
         users = Users.objects.filter(account=user_id)
-        #######
         members = Membership.objects.all().order_by('id')
         #######
 
@@ -40,33 +43,35 @@ class MarketWeb(View):
         }
         return render(request, "market.html", context=context)
 
+    # purchase of the package using the button and assigning it to the current logged in user
     def post(self, request):
         current_user = request.user
         user_id = current_user.id
         member_buy = Users.objects.get(account=user_id)
         members = Membership.objects.all()
-        money = Users.objects.get(account=user_id)
+
         if 'buy0' in request.POST.keys():
-            member_buy.member = members[4]
-        if 'buy1' in request.POST.keys():
-            member_buy.member = members[0]
-            money.usd = money.usd - members[0].price
-        if 'buy2' in request.POST.keys():
             member_buy.member = members[1]
-            money.usd = money.usd - members[1].price
-        if 'buy3' in request.POST.keys():
+        if 'buy1' in request.POST.keys():
+            member_buy.member = members[4]
+            member_buy.usd = member_buy.usd - members[4].price
+        if 'buy2' in request.POST.keys():
             member_buy.member = members[2]
-            money.usd = money.usd - members[2].price
-        if 'buy4' in request.POST.keys():
+            member_buy.usd = member_buy.usd - members[2].price
+        if 'buy3' in request.POST.keys():
             member_buy.member = members[3]
-            money.usd = money.usd - members[3].price
+            member_buy.usd = member_buy.usd - members[3].price
+        if 'buy4' in request.POST.keys():
+            member_buy.member = members[0]
+            member_buy.usd = member_buy.usd - members[0].price
         member_buy.save()
-        money.save()
 
         return redirect('market_view')
 
 
-class ProfileWeb(View):
+# profile page
+class ProfileWeb(LoginRequiredMixin, View):
+    # showing all information about the logged in user
     def get(self, request):
         current_user = request.user
         user_id = current_user.id
@@ -83,7 +88,9 @@ class ProfileWeb(View):
         return render(request, "profile.html", context=context)
 
 
-class HistoryWeb(View):
+# history page
+class HistoryWeb(LoginRequiredMixin, View):
+    # showing all transactions made by the logged in user
     def get(self, request):
         current_user = request.user
         user_id = current_user.id
@@ -91,15 +98,17 @@ class HistoryWeb(View):
         histor = History.objects.filter(account=user_id).order_by('date_exchange')
         context = {
             'users': users,
-            'histor:': histor,
+            'histor': histor,
         }
         return render(request, "history.html", context=context)
 
 
-###################################################################################################################
-# klasa poświęcona Bitcoin'em
-class Bitcoin(View):
-    # wyświetlanie informacji do strony z bitcoin'em
+# ----------------------------------------------------------------------------------------------------------------------
+
+
+# Bitcoin page
+class Bitcoin(LoginRequiredMixin, View):
+    # displaying information about bitcoin
     def get(self, request):
         current_user = request.user
         user_id = current_user.id
@@ -107,14 +116,14 @@ class Bitcoin(View):
         bitcoin = Crypto.objects.filter(pk=1)
         my_value = Value.objects.filter(account=user_id).filter(crypto=1)
         #######
-
         context = {
             'users': users,
             'bitcoin': bitcoin,
             'my_value': my_value,
         }
         return render(request, "list_crypto/1.html", context=context)
-    # pobieranie informacji zakupu lub sprzedaży kryptowaluty oraz wprowadzanie ich do bazy danych
+
+    # buying and selling cryptocurrencies by a logged in user
     def post(self, request):
         current_user = request.user
         user_id = current_user.id
@@ -155,7 +164,9 @@ class Bitcoin(View):
         return redirect("bitcoin_view")
 
 
-class Litecoin(View):
+# Litcoin page
+class Litecoin(LoginRequiredMixin, View):
+    # displaying information about litecoin
     def get(self, request):
         current_user = request.user
         user_id = current_user.id
@@ -171,6 +182,7 @@ class Litecoin(View):
         }
         return render(request, "list_crypto/2.html", context=context)
 
+    # buying and selling cryptocurrencies by a logged in user
     def post(self, request):
         current_user = request.user
         user_id = current_user.id
@@ -213,7 +225,9 @@ class Litecoin(View):
         return redirect("litecoin_view")
 
 
-class Dogecoin(View):
+# Dogecoin page
+class Dogecoin(LoginRequiredMixin, View):
+    # displaying information about dogecoin
     def get(self, request):
         current_user = request.user
         user_id = current_user.id
@@ -229,6 +243,7 @@ class Dogecoin(View):
         }
         return render(request, "list_crypto/3.html", context=context)
 
+    # buying and selling cryptocurrencies by a logged in user
     def post(self, request):
         current_user = request.user
         user_id = current_user.id
@@ -268,7 +283,9 @@ class Dogecoin(View):
         return redirect("dogecoin_view")
 
 
-class Tether(View):
+# Tether page
+class Tether(LoginRequiredMixin, View):
+    # displaying information about tether
     def get(self, request):
         current_user = request.user
         user_id = current_user.id
@@ -284,6 +301,7 @@ class Tether(View):
         }
         return render(request, "list_crypto/4.html", context=context)
 
+    # buying and selling cryptocurrencies by a logged in user
     def post(self, request):
         current_user = request.user
         user_id = current_user.id
@@ -323,7 +341,9 @@ class Tether(View):
         return redirect("tether_view")
 
 
-class Ethereum(View):
+# Ethereum page
+class Ethereum(LoginRequiredMixin, View):
+    # displaying information about ethereum
     def get(self, request):
         current_user = request.user
         user_id = current_user.id
@@ -339,6 +359,7 @@ class Ethereum(View):
         }
         return render(request, "list_crypto/5.html", context=context)
 
+    # buying and selling cryptocurrencies by a logged in user
     def post(self, request):
         current_user = request.user
         user_id = current_user.id

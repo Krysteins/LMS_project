@@ -6,10 +6,12 @@ from django.contrib import messages
 from dealerengine.models import Users, Value, Crypto
 
 
+# displaying the home page
 def home(request):
     return render(request, "main_site.html")
 
 
+# registering a new user, insertion basic data: login, email, password
 def register(request):
     if request.method == "POST":
         username = request.POST.get('login')
@@ -27,7 +29,7 @@ def register(request):
         if password != password2:
             messages.error(request, "Password didn't match!")
 
-        myuser = User.objects.create_user(login, email, password)
+        myuser = User.objects.create_user(username, email, password)
         myuser.save()
         adduser = Users.objects.create(account=myuser, usd=10)
         adduser.save()
@@ -51,6 +53,7 @@ def register(request):
     return render(request, "authentication/register.html")
 
 
+# logging into the system, throwing an error message when it is committed
 def loginin(request):
     if request.method == "POST":
         username = request.POST.get('login')
@@ -69,6 +72,7 @@ def loginin(request):
     return render(request, 'authentication/login.html')
 
 
+# logging out of the user
 def signout(request):
     logout(request)
     return redirect('home')
