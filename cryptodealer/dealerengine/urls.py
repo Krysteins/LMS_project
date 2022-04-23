@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from dealerengine.views import CryptoWeb, MarketWeb, ProfileWeb, Dogecoin, Litecoin, Bitcoin, Tether, Ethereum, \
-    HistoryWeb
+    HistoryWeb, BalanceWeb
 
 urlpatterns = [
     path('', ProfileWeb.as_view(), name='profile_view'),
@@ -13,4 +13,5 @@ urlpatterns = [
     path('crypto/3/', Dogecoin.as_view(), name='dogecoin_view'),
     path('crypto/4/', Tether.as_view(), name='tether_view'),
     path('crypto/5/', Ethereum.as_view(), name='ethereum_view'),
+    path('balance/', BalanceWeb.as_view(), name='add_balance_view'),
 ]

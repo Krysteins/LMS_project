@@ -18,7 +18,7 @@ class Membership(models.Model):
 class Users(models.Model):
     account = models.OneToOneField(User, on_delete=models.CASCADE)
     usd = models.DecimalField(max_digits=22, decimal_places=2, default=10.00)
-    member = models.ForeignKey(Membership, on_delete=models.PROTECT, default=0)
+    member = models.ForeignKey(Membership, on_delete=models.CASCADE, default=1)
 
 
 class Value(models.Model):

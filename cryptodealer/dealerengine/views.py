@@ -103,6 +103,37 @@ class HistoryWeb(LoginRequiredMixin, View):
         return render(request, "history.html", context=context)
 
 
+# add balance page
+class BalanceWeb(LoginRequiredMixin, View):
+    # showing page
+    def get(self, request):
+        current_user = request.user
+        user_id = current_user.id
+        users = Users.objects.filter(account=user_id)
+        context = {
+            'users': users,
+        }
+        return render(request, "add_balance.html", context=context)
+
+    # user can add money to balance account (without add credit card etc.)
+    def post(self, request):
+        current_user = request.user
+        user_id = current_user.id
+        money = Users.objects.get(account=user_id)
+        id_member = money.member.id
+        ############################
+        if request.POST['cash'] != '':
+            take_price = request.POST['cash']
+            take_prices = Decimal(take_price)
+            if 'buy' in request.POST.keys():
+                money.usd = money.usd + take_prices
+                t1 = History.objects.create(transaction='buy', name_crypto='Add to wallet'
+                                            , value_usd=take_prices)
+                t1.account.add(user_id)
+            money.save()
+        return redirect("add_balance_view")
+
+
 # ----------------------------------------------------------------------------------------------------------------------
 
 

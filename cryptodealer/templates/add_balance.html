@@ -1,0 +1,18 @@
+{% extends "__base__.html" %}
+{% load static %}
+{% block title %}
+    add balance
+{% endblock %}
+{% block container %}
+    <div class="text-center">
+        <img src="{% static "images/money.svg" %}" class="rounded mx-auto d-block" alt="money" width="300"
+             height="300">
+        <h1>Add money to balance</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            <label>
+                <input name="cash" class="p-1" type="number" value="1" step="1" min="1">
+            </label>
+            <button type="submit" name="buy" class="btn btn-success">Buy</button>
+    </div>
+{% endblock %}
