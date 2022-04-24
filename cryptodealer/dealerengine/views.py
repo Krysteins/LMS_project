@@ -8,11 +8,11 @@ from authentication import views, urls
 from dealerengine.models import Crypto, Membership, Users, Value, History
 from django.contrib import messages
 
-
-# link to the page with the list of cryptocurrencies
+'''link to the page with the list of cryptocurrencies'''
 class CryptoWeb(LoginRequiredMixin, View):
-    # displaying all cryptocurrencies
+
     def get(self, request):
+        """displaying all cryptocurrencies"""
         current_user = request.user
         user_id = current_user.id
         users = Users.objects.filter(account=user_id)
@@ -26,10 +26,11 @@ class CryptoWeb(LoginRequiredMixin, View):
         return render(request, "crypto.html", context=context)
 
 
-# page for the list of packages that can be purchased and reduce the purchase commission
+''' page for the list of packages that can be purchased and reduce the purchase commission'''
 class MarketWeb(LoginRequiredMixin, View):
-    # displaying all packages
+
     def get(self, request):
+        """displaying all packages"""
         current_user = request.user
         user_id = current_user.id
         users = Users.objects.filter(account=user_id)
@@ -43,8 +44,8 @@ class MarketWeb(LoginRequiredMixin, View):
         }
         return render(request, "market.html", context=context)
 
-    # purchase of the package using the button and assigning it to the current logged in user
     def post(self, request):
+        """purchase of the package using the button and assigning it to the current logged-in user"""
         current_user = request.user
         user_id = current_user.id
         member_buy = Users.objects.get(account=user_id)
@@ -69,15 +70,16 @@ class MarketWeb(LoginRequiredMixin, View):
         return redirect('market_view')
 
 
-# profile page
+""" profile page """
 class ProfileWeb(LoginRequiredMixin, View):
-    # showing all information about the logged in user
+
     def get(self, request):
+        """showing all information about the logged-in user"""
         current_user = request.user
         user_id = current_user.id
         users = Users.objects.filter(account=user_id)
         ##########
-        crypto = Value.objects.filter(account=user_id).order_by('id')
+        crypto = Value.objects.filter(account=users).order_by('id')
         crypto_name = Crypto.objects.all()
         value = 1
         context = {
@@ -88,9 +90,10 @@ class ProfileWeb(LoginRequiredMixin, View):
         return render(request, "profile.html", context=context)
 
 
-# history page
+""" history page """
 class HistoryWeb(LoginRequiredMixin, View):
-    # showing all transactions made by the logged in user
+    """showing all transactions made by the logged in user"""
+
     def get(self, request):
         current_user = request.user
         user_id = current_user.id
@@ -103,10 +106,10 @@ class HistoryWeb(LoginRequiredMixin, View):
         return render(request, "history.html", context=context)
 
 
-# add balance page
+''' add balance page'''
 class BalanceWeb(LoginRequiredMixin, View):
-    # showing page
     def get(self, request):
+        """showing page"""
         current_user = request.user
         user_id = current_user.id
         users = Users.objects.filter(account=user_id)
@@ -115,8 +118,8 @@ class BalanceWeb(LoginRequiredMixin, View):
         }
         return render(request, "add_balance.html", context=context)
 
-    # user can add money to balance account (without add credit card etc.)
     def post(self, request):
+        """ user can add money to balance account (without add credit card etc.)"""
         current_user = request.user
         user_id = current_user.id
         money = Users.objects.get(account=user_id)
@@ -137,10 +140,11 @@ class BalanceWeb(LoginRequiredMixin, View):
 # ----------------------------------------------------------------------------------------------------------------------
 
 
-# Bitcoin page
+"""Bitcoin page"""
 class Bitcoin(LoginRequiredMixin, View):
-    # displaying information about bitcoin
+
     def get(self, request):
+        """displaying information about bitcoin"""
         current_user = request.user
         user_id = current_user.id
         users = Users.objects.filter(account=user_id)
@@ -154,8 +158,8 @@ class Bitcoin(LoginRequiredMixin, View):
         }
         return render(request, "list_crypto/1.html", context=context)
 
-    # buying and selling cryptocurrencies by a logged in user
     def post(self, request):
+        """buying and selling cryptocurrencies by a logged in user"""
         current_user = request.user
         user_id = current_user.id
         crypto_price = Crypto.objects.get(name="Bitcoin")
@@ -195,10 +199,11 @@ class Bitcoin(LoginRequiredMixin, View):
         return redirect("bitcoin_view")
 
 
-# Litcoin page
+"""Litecoin page"""
 class Litecoin(LoginRequiredMixin, View):
-    # displaying information about litecoin
+
     def get(self, request):
+        """displaying information about litecoin"""
         current_user = request.user
         user_id = current_user.id
         users = Users.objects.filter(account=user_id)
@@ -213,8 +218,8 @@ class Litecoin(LoginRequiredMixin, View):
         }
         return render(request, "list_crypto/2.html", context=context)
 
-    # buying and selling cryptocurrencies by a logged in user
     def post(self, request):
+        """buying and selling cryptocurrencies by a logged-in user"""
         current_user = request.user
         user_id = current_user.id
         crypto_price = Crypto.objects.get(name="Litecoin")
@@ -256,10 +261,11 @@ class Litecoin(LoginRequiredMixin, View):
         return redirect("litecoin_view")
 
 
-# Dogecoin page
+"""Dogecoin page"""
 class Dogecoin(LoginRequiredMixin, View):
-    # displaying information about dogecoin
+
     def get(self, request):
+        """displaying information about dogecoin"""
         current_user = request.user
         user_id = current_user.id
         users = Users.objects.filter(account=user_id)
@@ -274,8 +280,8 @@ class Dogecoin(LoginRequiredMixin, View):
         }
         return render(request, "list_crypto/3.html", context=context)
 
-    # buying and selling cryptocurrencies by a logged in user
     def post(self, request):
+        """buying and selling cryptocurrencies by a logged-in user"""
         current_user = request.user
         user_id = current_user.id
         crypto_price = Crypto.objects.get(name="Dogecoin")
@@ -314,10 +320,11 @@ class Dogecoin(LoginRequiredMixin, View):
         return redirect("dogecoin_view")
 
 
-# Tether page
+"""Tether page"""
 class Tether(LoginRequiredMixin, View):
-    # displaying information about tether
+
     def get(self, request):
+        """displaying information about tether"""
         current_user = request.user
         user_id = current_user.id
         users = Users.objects.filter(account=user_id)
@@ -332,8 +339,8 @@ class Tether(LoginRequiredMixin, View):
         }
         return render(request, "list_crypto/4.html", context=context)
 
-    # buying and selling cryptocurrencies by a logged in user
     def post(self, request):
+        """buying and selling cryptocurrencies by a logged in user"""
         current_user = request.user
         user_id = current_user.id
         crypto_price = Crypto.objects.get(name="Tether")
@@ -372,10 +379,10 @@ class Tether(LoginRequiredMixin, View):
         return redirect("tether_view")
 
 
-# Ethereum page
+"""Ethereum page"""
 class Ethereum(LoginRequiredMixin, View):
-    # displaying information about ethereum
     def get(self, request):
+        """displaying information about ethereum"""
         current_user = request.user
         user_id = current_user.id
         users = Users.objects.filter(account=user_id)
@@ -390,8 +397,8 @@ class Ethereum(LoginRequiredMixin, View):
         }
         return render(request, "list_crypto/5.html", context=context)
 
-    # buying and selling cryptocurrencies by a logged in user
     def post(self, request):
+        """buying and selling cryptocurrencies by a logged-in user"""
         current_user = request.user
         user_id = current_user.id
         crypto_price = Crypto.objects.get(name="Ethereum")

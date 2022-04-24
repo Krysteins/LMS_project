@@ -6,13 +6,15 @@ from django.contrib import messages
 from dealerengine.models import Users, Value, Crypto, Membership
 
 
-# displaying the home page
+
 def home(request):
+    """displaying the home page"""
     return render(request, "main_site.html")
 
 
-# registering a new user, insertion basic data: login, email, password
+
 def register(request):
+    """registering a new user, insertion basic data: login, email, password"""
     if request.method == "POST":
         username = request.POST.get('username')
         email = request.POST.get('email')
@@ -53,8 +55,9 @@ def register(request):
     return render(request, "authentication/register.html")
 
 
-# logging into the system, throwing an error message when it is committed
+
 def loginin(request):
+    """logging into the system, throwing an error message when it is committed"""
     if request.method == "POST":
         username = request.POST.get('login')
         password = request.POST.get('password')
@@ -83,7 +86,8 @@ def loginin(request):
     return render(request, 'authentication/login.html')
 
 
-# logging out of the user
+
 def signout(request):
+    """logging out of the user"""
     logout(request)
     return redirect('home')
