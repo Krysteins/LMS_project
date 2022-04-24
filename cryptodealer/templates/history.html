@@ -9,6 +9,7 @@
         <tr>
             <th scope="col">date</th>
             <th scope="col">type of transaction</th>
+            <th scope="col">type of crypto</th>
             <th scope="col">crypto balance</th>
             <th scope="col">money balance</th>
         </tr>
@@ -16,20 +17,15 @@
 
         <tbody>
         {% for hist in histor %}
-{#            {% for his in hist %}#}
+
             <tr>
-                <td>{{ hist}}</td>
-{#                <td>{{ }}</td>#}
-                <td>@mdo</td>
+                <td>{{ hist.date_exchange}}</td>
+                <td>{{ hist.transaction}}</td>
+                <td>{{ hist.name_crypto}}</td>
+                <td>{{ hist.value_crypto }}</td>
+                <td>{{ hist.value_usd }}$</td>
             </tr>
         {% endfor %}
-{#        {% endfor %}#}
         </tbody>
     </table>
-    <h3>dupa</h3>
-    {% for hist in histor %}
-        <h1>cos</h1>
-    <h2>{{ hist.transaction }}</h2>
-    {% endfor %}
-    <h3>dupa</h3>
 {% endblock %}

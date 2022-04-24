@@ -1,15 +1,19 @@
 {% extends "__base__.html" %}
+{% load static %}
 {% block title %}
     Dashboard
 {% endblock %}
 {% block container %}
-    <h1>TO JEST GŁÓWNA STRONA</h1>
-    <h1>TO JEST GŁÓWNA STRONA</h1>
-    <h1>TO JEST GŁÓWNA STRONA</h1>
-    <h1>TO JEST GŁÓWNA STRONA</h1>
+    <body background="{% static "images/dashboard.png" %}">
+    <div class="position-absolute top-50 start-50 text-primary fw-bold">
+    <h1 class="text-center">Welcome on our website</h1>
+    <h1 class="text-center">where you can be next </h1>
+    <h1 class="text-center">Warren Buffett!</h1>
+    </div>
     {% for message in messages %}
         <div class="alert alert-info " role="alert">
             <strong>Message:</strong> {{ message }}
         </div>
+        </body>
     {% endfor %}
 {% endblock %}

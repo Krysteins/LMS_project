@@ -3,16 +3,18 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from dealerengine.models import Users, Value, Crypto
+from dealerengine.models import Users, Value, Crypto, Membership
 
 
+# displaying the home page
 def home(request):
     return render(request, "main_site.html")
 
 
+# registering a new user, insertion basic data: login, email, password
 def register(request):
     if request.method == "POST":
-        username = request.POST.get('login')
+        username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
         password2 = request.POST.get('password2')
@@ -26,10 +28,10 @@ def register(request):
             return redirect('home')
         if password != password2:
             messages.error(request, "Password didn't match!")
-
-        myuser = User.objects.create_user(login, email, password)
+        membership = Membership.objects.all()
+        myuser = User.objects.create_user(username, email, password)
         myuser.save()
-        adduser = Users.objects.create(account=myuser, usd=10)
+        adduser = Users.objects.create(account=myuser, usd=10, member=membership[1])
         adduser.save()
         coins = Crypto.objects.all()
         addcrypto1 = Value.objects.create(value=0, account=myuser, crypto=coins[0])
@@ -51,6 +53,7 @@ def register(request):
     return render(request, "authentication/register.html")
 
 
+# logging into the system, throwing an error message when it is committed
 def loginin(request):
     if request.method == "POST":
         username = request.POST.get('login')
@@ -60,15 +63,27 @@ def loginin(request):
 
         if user is not None:
             login(request, user)
-            login_name = user.username
-            return render(request, "profile.html", {'login_name': login_name})
+            current_user = request.user
+            user_id = current_user.id
+            users = Users.objects.filter(account=user_id)
+            ##########
+            crypto = Value.objects.filter(account=user_id).order_by('id')
+            crypto_name = Crypto.objects.all()
+            value = 1
+            context = {
+                'users': users,
+                'crypto': crypto,
+                'crypto_name': crypto_name
+            }
+            return render(request, "profile.html", context=context)
         else:
             messages.error(request, "Wrong login or password")
-            return redirect('home')
+            return redirect('login_view')
 
     return render(request, 'authentication/login.html')
 
 
+# logging out of the user
 def signout(request):
     logout(request)
     return redirect('home')

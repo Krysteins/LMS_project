@@ -7,11 +7,13 @@
     <div class="center">
         <img src="{% static "images/profile.svg" %}" class="rounded mx-auto d-block" alt="bitcoin" width="300"
              height="300">
-        <h1 class="rounded mx-auto d-block">{{ user }}</h1>
-    </div>
+
+
+    <div ">
+    <h1 class="rounded mx-auto d-block">{{ user }}</h1>
     <table class="table">
 
-        <tbody>
+
         {% for useres in users %}
             <tr>
                 <th>Balance: {{ useres.usd }} $</th>
@@ -36,7 +38,6 @@
             </tr>
         {% endfor %}
 
-
-        </tbody>
+    
     </table>
 {% endblock %}
