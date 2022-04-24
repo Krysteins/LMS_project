@@ -1,5 +1,6 @@
 from decimal import Decimal
-
+from django.contrib.auth.models import User
+from dealerengine.models import Users, Value, Membership
 from django import urls
 from django.contrib.auth import get_user_model
 import pytest
@@ -16,6 +17,7 @@ import pytest
     ('dogecoin_view'),
     ('tether_view'),
     ('ethereum_view'),
+    ('add_balance_view'),
 ])
 @pytest.mark.django_db
 def test_render_views_with_login(client, authenticated_user, param):
@@ -42,9 +44,6 @@ def test_render_views(client, param):
     temp_url = urls.reverse(param)
     resp = client.get(temp_url)
     assert resp.status_code == 302
-
-from django.contrib.auth.models import User
-from dealerengine.models import Users, Value, Membership
 
 
 @pytest.mark.django_db
@@ -81,6 +80,7 @@ def test_add_balance_decimal(client, authenticated_user):
     summary2 = Decimal(monej + 10.10)
     assert cash.usd < summary1
     assert cash.usd > summary2
+
 
 ################################################################################## cryptocurrency tests!
 @pytest.mark.django_db
